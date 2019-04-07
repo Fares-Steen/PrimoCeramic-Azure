@@ -1,0 +1,78 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color:antiquewhite;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+.radio-item {
+    display: inline-block;
+    position: relative;
+    padding: 0 6px;
+    margin: 10px 0 0;
+}
+
+    .radio-item input[type='radio'] {
+        display: none;
+    }
+
+    .radio-item label {
+        color: #666;
+        font-weight: normal;
+    }
+
+        .radio-item label:before {
+            content: " ";
+            display: inline-block;
+            position: relative;
+            top: 5px;
+            margin: 0 5px 0 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 11px;
+            border: 2px solid #004c97;
+            background-color: transparent;
+        }
+
+    .radio-item input[type=radio]:checked + label:after {
+        border-radius: 11px;
+        width: 12px;
+        height: 12px;
+        position: absolute;
+        top: 9px;
+        left: 10px;
+        content: " ";
+        display: block;
+        background: #004c97;
+    }

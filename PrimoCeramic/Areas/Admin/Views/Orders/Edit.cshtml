@@ -1,0 +1,125 @@
+﻿@model List<PrimoCeramic.Models.ViewModel.OrderViewModel>
+
+@using PrimoCeramic.Utility
+@{double Sum = 0; }
+<br />
+@if (Model.Count > 0)
+{
+
+
+        <table class="table table-responsive-sm border" width="100%">
+            <tr style="background-color:darkcyan">
+                <th style="text-align:center;width:20%">
+                    Ordernumber   @Model.FirstOrDefault().OrderId
+                </th>
+                <th style="text-align:center;">
+                    <label asp-for="@Model.FirstOrDefault().ProductName"></label>
+                </th>
+                <th style="text-align:center;">
+                    <label asp-for="@Model.FirstOrDefault().ProductType"></label>
+                </th>
+
+
+                <th style="text-align:center;">
+                    <label asp-for="@Model.FirstOrDefault().Quantity"></label>
+                </th>
+                <th style="text-align:center;">
+                    <label asp-for="@Model.FirstOrDefault().Price"></label>
+                </th>
+                <th style="text-align:center;">
+                    <label>Total</label>
+                </th>
+               
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr style="padding:50px">
+                    <td>
+                        <div>
+                            <a asp-area="Admin" asp-controller="Orders" asp-action="EditOrderProduct" asp-route-id="@item.OrderId" asp-route-ProductsOrder="@item.ProductsSelectedForOrderid" class="btn btn-secondary">Edit</a>
+                            <a asp-area="Admin" asp-controller="Orders" asp-action="DeleteOrderProduct" asp-route-id="@item.OrderId " asp-route-Product="@item.ProductId" class="btn btn-danger">Delete</a>
+                            <a asp-area="Customer" asp-controller="Ceramic" asp-action="Details" asp-route-id="@item.ProductId">
+
+                                <img src="@item.ProductImge" width="20%" style="margin:auto; display:block;border-radius:5px;border:1px solid #bbb9b9" />
+                            </a>
+                        </div>
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(c => item.ProductName)
+
+                    </td>
+                    <td style="text-align:center">
+
+                        @Html.DisplayFor(c => item.ProductType)
+
+                    </td>
+                    <td style="text-align:center">
+
+                        @Html.DisplayFor(c => item.Quantity)
+
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(c => item.Price)
+
+                    </td>
+
+                    <td style="text-align:center">
+                        @{double total = (int)item.Price * item.Quantity; }
+                        @total
+                        @{Sum += total;}
+                    </td>
+
+
+                 
+
+                </tr>
+            }
+
+            <tr class="table-info">
+                <th style="text-align:center;width:30%">
+                    Order Date @Model.FirstOrDefault().Date
+                </th>
+
+                <th style="text-align:center;">
+
+                    <label></label>
+                </th>
+             
+
+
+
+                <th style="text-align:center;">
+
+                    <label style="color:black;">Total</label>
+                </th>
+                <th style="text-align:center;color:black;">
+                    <label style="color:black;">@Sum</label>
+                </th>
+                @*<th style="text-align:center;">
+                    @if (!@Model.FirstOrDefault().IsSent)
+                    {
+                        <form method="post">
+                            <input type="submit" asp-area="Admin" asp-action="Index" asp-controller="Orders" asp-route-id="@Model.FirstOrDefault().OrderId" class="btn btn-danger" value="Delete" />
+                        </form>
+                    }
+                </th>*@
+                <th style="text-align:center;">
+
+                    <form method="post">
+                        <input type="text" asp-route-Id="@Model.FirstOrDefault().OrderId" hidden />
+                        <input type="checkbox" asp-for="@Model.FirstOrDefault().IsSent" id="sent"  name="IsSent" style="color:black;"value="true"  /><label for="sent" style="color:black;">Sent</label>
+                        <input type="checkbox" asp-for="@Model.FirstOrDefault().IsPaid" id="paid" name="IsPaid" style="color:black;" value="true" /><label for="paid" style="color:black;">Paid</label>
+                        <input type="submit" asp-area="Admin" asp-action="Edit" asp-controller="Orders"  class="btn btn-primary" value="Update" />
+                    </form>
+
+                </th>
+            </tr>
+        </table>
+    
+}
+else
+{
+    <div> No Items added to the shoping cart</div>
+}
+<br />

@@ -1,0 +1,106 @@
+﻿@* create a special tag model *@
+@model PrimoCeramic.Models.Emails
+@{
+    ViewData["Title"] = "Create";
+}
+
+<br />
+<br />
+<br />
+@* the subject *@
+<h2 class="text-info">Create Email</h2>
+
+@* Create a form to insert new special tag using the Create post method in the controller *@
+
+<form method="post" asp-action="Create">
+
+    <div class="p-4 border rounded">
+
+        @*check the validation and show a meesage in case if not valid*@
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group row">
+
+            @*to show the column name*@
+            <div class="col-2">
+                <label asp-for="Email"></label>
+
+            </div>
+            <div class="col-5">
+                @*to insert textbox to enter the special tag name*@
+                <input asp-for="Email" class="form-control" />
+            </div>
+            @*to show validation of the Name(cant be empty)*@
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+
+            @*to show the column name*@
+            <div class="col-2">
+                <label asp-for="EmailType"></label>
+
+            </div>
+            <div class="col-5">
+                @*to insert textbox to enter the special tag name*@
+                <input asp-for="EmailType" class="form-control" />
+            </div>
+            @*to show validation of the Name(cant be empty)*@
+            <span asp-validation-for="EmailType" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+
+            @*to show the column name*@
+            <div class="col-2">
+                <label asp-for="Password"></label>
+
+            </div>
+            <div class="col-5">
+                @*to insert textbox to enter the special tag name*@
+                <input asp-for="Password" type="password" class="form-control" />
+            </div>
+            @*to show validation of the Name(cant be empty)*@
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+
+            @*to show the column name*@
+            <div class="col-2">
+                <label asp-for="Port"></label>
+
+            </div>
+            <div class="col-5">
+                @*to insert textbox to enter the special tag name*@
+                <input asp-for="Port" class="form-control" />
+            </div>
+            @*to show validation of the Name(cant be empty)*@
+            <span asp-validation-for="Port" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+
+            @*to show the column name*@
+            <div class="col-2">
+                <label asp-for="Map"></label>
+
+            </div>
+            <div class="col-5">
+                @*to insert textbox to enter the special tag name*@
+                <input asp-for="Map" class="form-control" />
+            </div>
+            @*to show validation of the Name(cant be empty)*@
+            <span asp-validation-for="Map" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+            @*create the "Create button"*@
+            <input type="submit" class="btn btn-primary" value="Create" />
+            @*create a link back to index page*@
+            <a asp-action="Index" class="btn btn-primary">Back to List</a>
+        </div>
+
+    </div>
+
+</form>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

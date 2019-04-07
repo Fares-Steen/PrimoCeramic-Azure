@@ -1,0 +1,76 @@
+﻿@model List<PrimoCeramic.Models.CustomerAddress>
+@using PrimoCeramic.Utility
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<br />
+<br />
+
+<div class="row">
+
+    <div class="col-6">
+        <h2 class="text-info">Addresses List</h2>
+
+        <br />
+        @if (TempData["meesage"] != null)
+        {
+            <div class="alert alert-info alert-dismissable" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                @TempData["meesage"]
+
+            </div>
+        }
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" asp-for-id="" class="btn btn-info">&nbsp; <i class="fas fa-plus"></i> New Address </a>
+    </div>
+</div>
+
+<br />
+<table class="table table-striped border">
+    <tr class="table-info">
+
+        <th>
+            <label>Country</label> 
+        </th>
+        <th>
+            <label>City</label>  
+        </th>
+        <th>
+            <label>Phone</label>     
+        </th>
+        <th>
+            <label>Address</label>      
+        </th>
+        
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(m => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.City)
+            <td>
+                @Html.DisplayFor(m => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Address)
+            </td>
+            
+            
+
+            <td>
+                <partial name="_TableButtonPartial2" model="item.Id" />
+            </td>
+        </tr>
+    }
+</table>

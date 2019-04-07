@@ -1,0 +1,190 @@
+﻿@model PrimoCeramic.Models.ViewModel.ProductsListViewModel
+@using PrimoCeramic.Utility
+@using PrimoCeramic.Extensions
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<br />
+<br />
+
+<div class="row">
+
+    <div class="col-6">
+        <h2 class="text-info">Product List</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" class="btn btn-info">&nbsp; <i class="fas fa-plus"></i> New Product </a>
+    </div>
+</div>
+
+<form method="get">
+    <div style="height:150px; background-color:black" class="container">
+
+        <div class="col-12">
+
+            <div class="row" style="padding-top:10px">
+
+                <div class="col-2">
+                    <label>Product Name</label>
+                </div>
+
+                <div class="col-3">
+                    <input asp-for="@Model.SearchName" type="text" name="searchName" class="form-control" />
+
+
+                   
+                </div>
+                <div class="col-2">
+                    <select class="selecttag" name="TypeNumber" asp-for="@Model.SelectedType" asp-items="Model.ProductTypes.ToSelectListItem(Model.SelectedType) "></select>
+                </div>
+
+                <div class="col-2">
+                    <select class="selecttag" name="TagNumber" asp-for="@Model.SelectedTag" asp-items="Model.SpecialTags.ToSelectListItem(Model.SelectedTag) "></select>
+                </div>
+
+                <div class="col-3">
+                  
+
+                </div>
+            </div>
+            <div class="row" style="padding-top:10px">
+
+                <div class="col-2">
+                    
+                </div>
+
+                <div class="col-3">
+
+
+
+                    @*@Html.Editor("searchPhone", new { htmlAttributes = new { @class = "form-control" } })*@
+
+                </div>
+
+                <div class="col-2">
+
+                </div>
+                <div class="col-2">
+                    
+                </div>
+
+                <div class="col-3">
+
+
+
+
+
+                </div>
+            </div>
+
+            <div class="row" style="padding-top:10px">
+
+                <div class="col-2">
+
+
+                </div>
+
+                <div class="col-3">
+
+
+
+                </div>
+
+                <div class="col-2">
+
+                </div>
+                <div class="col-2">
+
+                </div>
+
+                <div class="col-3">
+                    <button type="submit" name="submit" value="Search" class="btn btn-primary form-control">
+                        <i class="fas fa-search"></i>Search
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+<table class="table table-striped border">
+    <tr class="table-info">
+
+        <th>
+            Name
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Available
+        </th>
+        <th>
+            ProductTypes
+        </th>
+        <th>
+            SpecialTags
+        </th>
+        <th>
+            ProductCountry
+        </th>
+        <th>
+            ProductApplication
+        </th>
+        <th>
+            ProducSurface
+        </th>
+        <th>
+            Image
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(m => item.Name)
+            </td>
+            <td>
+                @String.Format(Currency.SaudiArabia, "{0:c}", item.Price)
+            <td>
+                @Html.DisplayFor(m => item.Available)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProductTypes.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.SpecialTags.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProductCountry.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProductApplication.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.ProducSurface.Name)
+            </td>
+            <td>
+                <img src=" @Html.DisplayFor(m => item.Image)" width="100px" height="100px" style="border-radius:5px; border:1px solid #bbb9b9;" />
+            </td>
+
+            <td>
+                <partial name="_TableButtonPartial" model="item.Id" />
+            </td>
+        </tr>
+    }
+</table>
+
+@if (Model.PagingInfo.TotalPage != 1)
+{
+
+    <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+         page-class="btn border" page-class-normal="btn btn-page-normal active"
+         page-class-selected="btn btn-page-selected active" class="btn-group m-1"></div>
+}

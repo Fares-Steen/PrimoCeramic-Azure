@@ -1,0 +1,385 @@
+﻿@model PrimoCeramic.Models.ViewModel.ProductDetailsCartViewModel
+@using PrimoCeramic.Extensions
+@using Microsoft.AspNetCore.Http
+@using PrimoCeramic.TempModels
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+<br />
+<br />
+<br />
+<a asp-action="Index" class="btn btn-primary">Back to List</a>
+<h2 class="text-info"> @Model.Products.Name </h2>
+@*<img id="myImg" src="~/Homephotos/home1.jpg" alt="Snow" style="width:100%;max-width:300px">*@
+
+<!-- The Modal -->
+@*<div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <div>
+        <span class="next carousel-control-prev-icon"></span>
+        <img class="modal-content" id="img01">
+
+    </div>
+
+</div>*@
+
+<div id="myModal" class="modal">
+    <span class="close2 cursor" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+        @for (int x = 1; x <= Model.ProductImages.Count; x++)
+        {
+            <div class="mySlides">
+                <div class="numbertext">@x / @Model.ProductImages.Count</div>
+                <img src="@Model.ProductImages[x-1].Image" style="width:100%">
+            </div>
+        }
+
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        <div class="caption-container">
+            <p id="caption"></p>
+        </div>
+
+        @*@for (int x = 1; x <= Model.ProductImages.Count; x++)
+        {
+
+            <div class="column">
+                <img class="demo cursor" src="@Model.ProductImages[x-1].Image" style="width:100%" onclick="currentSlide(x+1)" alt="Nature and sunrise">
+            </div>
+            
+        }*@
+      
+    </div>
+</div>
+@if (TempData["meesage"] != null)
+{
+    if (TempData["meesage"].ToString().Contains("added to shopping"))
+    {
+        <div class="alert alert-info alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            @TempData["meesage"]
+            <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index" style="color:blue">Go to shopping cart</a>
+        </div>
+
+    }
+    else if (TempData["meesage"].ToString().Contains("added to sample"))
+    {
+        <div class="alert alert-info alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            @TempData["meesage"]
+            <a asp-area="Customer" asp-controller="SampleCart" asp-action="Index">Go to sample cart</a>
+        </div>
+
+    }
+    else
+    {
+        <div class="alert alert-danger alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            @TempData["meesage"]
+
+        </div>
+    }
+}
+
+
+<form method="post">
+    @*asp-action="Create"*@
+
+    <div class="p-1 border rounded row">
+
+        <div class="col-lg-6 col-sm-12 text-center">
+           
+
+            @foreach (var item in Model.ProductImages)
+            {
+                if (item.IsDefault)
+                {
+                    <div>
+
+                        <img class="transparent "onclick="openModal();currentSlide(1)" src="@item.Image" id="mainimag" width="80%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+
+                    </div>
+                }
+
+
+                <img class="img-fluid" src="@item.Image" id="@item.Image" width="20%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+
+            }
+
+
+            <br />
+            <br />
+            @if (Model.Products.Available)
+            {
+
+                <label style="font-size:30px; color:green; font-family:Arial;font-weight:bold">Available <i class="far fa-calendar-check"></i></label>
+
+            }
+            else
+            {
+
+                <label style=" font-size:30px; color:red; font-family:Arial;font-weight:bold">Not Available <i class="far fa-calendar-times"></i></label>
+
+            }
+        </div>
+        <div class="col-lg-6 col-sm-12 " style="padding:20px;">
+
+
+            <div>
+                <div class="form-group row borderwhite">
+                    <div class="col-lg-3 col-6">
+
+                        <label>Type:</label>
+                    </div>
+                    <div class="col-lg-3 col-6">
+
+
+                        <label>@Model.Products.ProductTypes.Name</label>
+                    </div>
+                    <div class="col-lg-3 col-6">
+
+                        <label>Price:</label>
+                    </div>
+                    <div class="col-lg-3 col-6">
+
+                        <label>@Model.Products.Price S.R/m²</label>
+                    </div>
+
+                </div>
+                <div class="form-group row borderwhite">
+                    <div class="col-lg-3 col-6">
+
+                        <label>Made in:</label>
+                    </div>
+                    <div class="col-lg-3 col-6">
+
+
+                        <label>@Model.Products.ProductCountry.Name</label>
+                    </div>
+                    <div class="col-lg-3 col-6">
+
+                        <label>Tag:</label>
+                    </div>
+                    <div class="col-lg-3 col-6">
+
+                        <label>@Model.Products.SpecialTags.Name</label>
+                    </div>
+                </div>
+               
+                <div class="form-group row borderwhite">
+                    <div class="col-lg-3 col-6">
+
+                        <label>Application:</label>
+                    </div>
+                    <div class="col-lg-3 col-6">
+
+
+                        <label>@Model.Products.ProductApplication.Name</label>
+                    </div>
+                    @if(Model.Products.Width!=0|| Model.Products.Height != 0) { 
+                    <div class="col-lg-3 col-6">
+
+                        <label>Size:</label>
+                    </div>
+                    <div class="col-lg-3 col-6">
+
+                        @if (Model.Products.Depth == 0)
+                        {
+                            <label>@Model.Products.Width X @Model.Products.Height cm</label>
+                        }
+                        else
+                        {
+                            <label>@Model.Products.Width X @Model.Products.Height X @Model.Products.Depth cm</label>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <div class="form-group row borderwhite">
+
+                    @if (Model.Products.ProducSurface.Name != null || Model.Products.ProducSurface.Name != null)
+                    {
+                        <div class="col-lg-3 col-6">
+
+                            <label>Surface:</label>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <label>@Model.Products.ProducSurface.Name</label>
+
+                        </div>
+                    }
+                    @if (Model.Products.Thickness != 0)
+                    {
+                        <div class="col-lg-3 col-6">
+
+                            <label>Thickness:</label>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <label>@Model.Products.Thickness</label>
+
+                        </div>
+                    }
+                </div>
+                @if ( Model.Products.Note!=null)
+                {
+                    <div class="form-group row borderwhite">
+                        <div class="col-2">
+
+                            <label>Note:</label>
+                        </div>
+                        <div class="col-10">
+
+                            <label>@Model.Products.Note</label>
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+
+                    @{
+                        bool isInbag = false;
+                        List<string> lstCart = HttpContextAccessor.HttpContext.Session.Get<List<string>>("ssSampleCart");
+                        if (lstCart != null && lstCart.Contains(Model.Products.Id.ToString()))
+                        {
+                            isInbag = true;
+                        }
+                    }
+                    @{
+                        bool isInShoppingbag = false;
+                        List<ShoppingCart> lstShoppingCart = HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>("ssShoppingCart");
+
+
+
+                        if (lstShoppingCart != null && lstShoppingCart.Contains(lstShoppingCart.Find(x => x.ProductId == Model.Products.Id)))
+                        {
+
+
+                            isInShoppingbag = true;
+
+                        }
+                    }
+                </div>
+                <div class="col-lg-12">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Sample</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane  show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            @if (isInShoppingbag)
+                            {
+                                <button type="submit" value="Remove From Bag" asp-action="RemovefromShopping" asp-route-id="@Model.Products.Id" class="btn btn-danger ">Remove from Shopping Bag <i class="fas fa-shopping-cart"></i>&nbsp;</button>
+                            }
+                            else
+                            {
+                                <h3>Quantity</h3> <input type="number" min="1" max="20000" asp-for="Quantity" value="1" />
+                                <br /><br />
+                                <button type="submit" value="Add to Bag" asp-action="AddtoShopping" asp-route-id="@Model.Products.Id" class="btn btn-primary ">Add To Shopping Bag <i class="fas fa-shopping-cart"></i>&nbsp;</button>
+
+                            }
+                        </div>
+
+                        <br />
+
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            @if (isInbag)
+                            {
+                                <button type="submit" value="Remove From Bag" asp-action="RemoveFromSample" asp-route-id="@Model.Products.Id" class="btn btn-danger ">Remove from Sample Bag <i class="fas fa-eye"></i>&nbsp;</button>
+                            }
+                            else
+                            {
+                                <button type="submit" value="Add to Bag" asp-action="AddToFromSample" asp-route-id="@Model.Products.Id" class="btn btn-primary ">Add To Sample Bag <i class="fas fa-eye"></i>&nbsp;</button>
+                            }
+                        </div>
+
+
+
+
+
+
+
+                    </div>
+
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-1">
+
+        </div>
+
+
+        <br />
+        <div class="form-group col-lg-3">
+            <input hidden asp-for="Products.Id" />
+            <a asp-action="Index" class="btn btn-primary">Back to List</a>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts{
+<script>
+    function openModal() {
+        document.getElementById('myModal').style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById('myModal').style.display = "none";
+    }
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        var captionText = document.getElementById("caption");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        captionText.innerHTML = dots[slideIndex - 1].alt;
+    }
+</script>
+}
+@section css {
+    <link rel="stylesheet" href="~/css/Details.css" asp-append-version="true" />
+
+
+}

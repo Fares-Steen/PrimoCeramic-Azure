@@ -1,0 +1,43 @@
+﻿@model PrimoCeramic.Models.ProductsSelectedForOrder
+@using PrimoCeramic.Extensions
+@{
+    ViewData["Title"] = "EditOrderProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditOrderProduct</h2>
+
+<form method="post" >
+    @*asp-action="Create"*@
+
+    <div class="p-1 border rounded row">
+        <input asp-for="Id" hidden/>
+        <input asp-for="ProductId" hidden/>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-6">
+            <div class="form-group row">
+                <div class="col-4">
+
+                    <label asp-for="Quantity"></label>
+                </div>
+                <div class="col-8">
+
+                    <input asp-for="Quantity" class="form-control" />
+                </div>
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+
+                    <label>Price</label>
+                </div>
+                <div class="col-8">
+
+                    <input asp-for="Prise" class="form-control" />
+                </div>
+                <span asp-validation-for="Prise" class="text-danger"></span>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Update" />
+        </div>
+    </div>
+</form>

@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Indexxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</h2>
+<body onload="onLoadSubmit()">
+    <form>
+<input type="submit" hidden/>
+</form>
+</body>
+
+@section Scripts{
+    <script language="javascript">
+        function onLoadSubmit() {
+            document.nameofForm.submit();
+        }
+    </script>
+
+    }

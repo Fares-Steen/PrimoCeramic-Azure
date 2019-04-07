@@ -1,0 +1,183 @@
+﻿
+.selecttag {
+    background-color: #1f3933;
+    color: white;
+    border-color: #1f3933;
+    font-weight: 400;
+    font-size: 15px;
+    border-radius:5px;
+}
+    .selecttag > option {
+        font-weight: 400;
+        font-size: 15px;
+        border-radius: 5px;
+        list-style: none;
+       
+    }
+  select:focus>option:hover{
+      background:#ff0000;
+  }
+
+select:focus > option:checked {
+    background: #1c2723 !important;
+}
+
+
+.homebar {
+    text-align: center;
+    border: double;
+    background-color: #1f3933;
+    border-radius: 10px;
+}
+.btn-page-selected {
+    background-color: #1f3933;
+    color:white;
+    
+}
+    .btn-page-selected:hover {
+        background-color: #1f3933;
+        color: white;
+    }
+.btn-page-normal {
+    background-color: white;
+    color: #1f3933;
+}
+
+    .btn-page-normal:hover {
+        background-color: white;
+        color: #1f3933;
+    }
+.homephotos {
+    text-align: center;
+    background-color: #000000;
+}
+.homebarlinks {
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #1f3933;
+    font-weight: 700;
+    font-size: 30px;
+    font-family: "Times New Roman", Times, serif;
+    color: white;
+    text-decoration: none;
+    transition: all 0.5s;
+}
+.mobilhome{
+    padding:20px;
+    text-align:center;
+}
+.mobilehomebutton {
+    padding-top: 7px;
+    padding-bottom: 20px;
+    border-radius:10px;
+    background-color: #1f3933;
+    font-weight: 700;
+    font-size: 30px;
+    color: white;
+    text-decoration: none;
+   
+    width:100%;
+}
+
+    
+    a:hover {
+        transform: scale(1.1);
+        text-decoration: none;
+        color: black;
+    }
+label,h1,h2,h3,h4,h5,h6,th,table,p,a{
+    color:white;
+}
+.table-info th{
+    color:black;
+}
+a {
+    text-decoration: none;
+}
+a:hover{
+    color:antiquewhite;
+}
+    a.underlined {
+        text-decoration: none;
+    }
+
+@media only screen and (max-width: 767px) {
+    .bigpage {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 993px) {
+    .midpage {
+        font-weight: 500;
+        font-size: 25px;
+        
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media only screen and (min-width: 766px) {
+    .smallpage {
+        display: none;
+    }
+}
+
+input[type=number] {
+    width: 70px;
+}
+.borderwhite{
+   border:solid;
+   border-color:#ffffff
+}
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    #myImg:hover {
+        opacity: 0.7;
+    }
+
+/* The Modal (background) */
+
+
+.nav-tabs {
+    background-color: #161616;
+   
+}
+
+.nav-tabs>li>active>a:hover{
+    color:white;
+}
+
+.nav-tabs > li > a {
+    border: medium;
+    border-color:white;
+    color:white;
+}
+
+    .nav-tabs > li > a:hover {
+        background-color: #1f3933 !important;
+        border: medium none;
+        border-radius: 5px;
+        color: white;
+    }
+
+    .nav-tabs .nav-link.active,
+    .nav-tabs .nav-item.show .nav-link {
+        color: white;
+        background-color: #1f3933;
+        border-color: #dee2e6 #dee2e6 #fff;
+    }
+
+.table-info > th {
+    background-color: #1f3933;
+    background: #1f3933;
+    border:none;
+}
+
+.btn{
+    border-radius:10px;
+}

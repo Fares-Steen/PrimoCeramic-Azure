@@ -1,0 +1,13 @@
+﻿@model PrimoCeramic.Models.ViewModel.OrderViewModelWithId
+@{
+    ViewData["Title"] = "OrderConfirmation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Order Confirmation</h2>
+<h2>A salesman will contact you soon for delivery and payment..</h2>
+<a asp-controller="Home" asp-action="Index" asp-area="Customer" class="btn btn-primary">Home Pagepage</a>
+
+<br />
+<partial name="~/Views/Shared/_OrderProductsDetails.cshtml" model="Model" />
+

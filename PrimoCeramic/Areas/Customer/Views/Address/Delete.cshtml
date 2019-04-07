@@ -1,0 +1,70 @@
+﻿@model PrimoCeramic.Models.CustomerAddress
+@using PrimoCeramic.Extensions
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<br />
+<br />
+<br />
+
+<h2 class="text-info">Delete Address </h2>
+
+<form method="post" enctype="multipart/form-data">
+    @*asp-action="Create"*@
+
+    <div class="p-4 border rounded">
+        
+        <div class="form-group row">
+            <div class="col-lg-2 col-sm-12">
+
+                <label asp-for="Country"></label>
+            </div>
+            <div class="col-lg-5 col-sm-12">
+
+                <input asp-for="Country" disabled class="form-control" />
+            </div>
+           
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-2 col-sm-12">
+
+                <label asp-for="City"></label>
+            </div>
+            <div class="col-lg-5 col-sm-12">
+
+                <input asp-for="City"disabled class="form-control" />
+            </div>
+           
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-2 col-sm-12">
+
+                <label asp-for="Address"></label>
+            </div>
+            <div class="col-lg-5 col-sm-12">
+
+                <input asp-for="Address"disabled class="form-control" />
+            </div>
+           
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-2 col-sm-12">
+
+                <label asp-for="Phone"></label>
+            </div>
+            <div class="col-lg-5 col-sm-12">
+
+                <input asp-for="Phone"disabled class="form-control" />
+            </div>
+            
+        </div>
+
+        <br />
+        <div class="form-group">
+            <input type="submit" class="btn btn-danger"asp-route-id="@Model.Id" value="Delete" />
+            <a asp-action="Index" class="btn btn-primary">Back to List</a>
+        </div>
+    </div>
+</form>
+

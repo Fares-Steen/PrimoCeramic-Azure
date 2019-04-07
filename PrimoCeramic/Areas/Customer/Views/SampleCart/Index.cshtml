@@ -1,0 +1,152 @@
+﻿@model PrimoCeramic.Models.ViewModel.SampleCartViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form method="post">
+    <br /><br /><br /><br />
+    <h2 class="text-info">Your Sample Cart</h2>
+    <br />
+
+    @if (Model.Products.Count > 0)
+    {
+    <div class="container border border-secondary rounded" style="padding:15px; padding:15px;">
+        <div class="row">
+            <div class="col-sm-4" style="padding-left:30px; border-right:1px solid #bbb9b9;">
+
+                <div class="row">
+                    <div class="col-12" style="padding-bottom:15px;">
+                        <label>Name: </label>
+                    </div>
+                    <div class="col-12" style="padding-bottom:15px;">
+                        <input asp-for="@Model.Appointments.CustomerName" class="form-control" />
+                    </div>
+                    <div class="col-12">
+                        <label>Phone Number: </label>
+                    </div>
+                    <div class="col-12" style="padding-bottom:15px;">
+                        <input asp-for="@Model.Appointments.CustomerPhone" class="form-control" />
+                    </div>
+                    <div class="col-12">
+                        <label>Email: </label>
+                    </div>
+                    <div class="col-12" style="padding-bottom:15px;">
+                        <input asp-for="@Model.Appointments.CustomerEmail" class="form-control" />
+                    </div>
+                    <div class="col-12">
+                        <label>Appointment Date: </label>
+                    </div>
+                    <div class="col-12" style="padding-bottom:15px;">
+                        <input asp-for="@Model.Appointments.AppointmentDate" value="" type="text" id="datepicker" class="form-control" />
+                    </div>
+                    <div class="col-12">
+                        <label>Appointment Time: </label>
+                    </div>
+                    <div class="col-12" style="padding-bottom:15px;">
+                        <input asp-for="@Model.Appointments.AppointmentTime" value="" type="text" class="timepicker form-control" />
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" id="btnPlaceOrder" class="btn btn-primary">Schedule Appointment</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-8 col-sm-12" >
+                <table class="table table-responsive-sm" width="100%"  >
+                    <tr class="table-info" >
+                        <th style="text-align:center; border-radius: 15px 0px 0px 15px; background-color:dimgrey;border:0">
+                            Photo
+                        </th>
+
+                        <th style="text-align:center;background-color:dimgrey;border:0px">
+                            <label asp-for="@Model.Products.FirstOrDefault().Name"></label>
+                        </th>
+                        <th style="text-align:center;background-color:dimgrey;border:0px">
+                            <label asp-for="@Model.Products.FirstOrDefault().Price"></label>
+                        </th>
+                        <th style="text-align:center;background-color:dimgrey;border:0px">
+                            <label asp-for="@Model.Products.FirstOrDefault().ShadeColor"></label>
+                        </th>
+                        <th style="text-align:center;background-color:dimgrey;border:0px">
+
+                        </th>
+                        <th style="text-align:center;background-color:dimgrey;border:0px">
+                            <label asp-for="@Model.Products.FirstOrDefault().ProductTypes.Name"></label>
+                        </th>
+
+                        <th style="text-align:center;border-radius: 0px 15px 15px 0px;background-color:dimgrey;border:0">
+
+                        </th>
+
+                        @foreach (var item in Model.Products)
+                        {
+<tr style="padding:50px">
+                            <td>
+                                <a asp-area="Customer" asp-controller="Ceramic" asp-action="Details" asp-route-id="@item.Id">
+
+                                    <img src="@item.Image" width="100%" style="margin:auto; display:block;border-radius:5px;border:1px solid #bbb9b9" />
+                                </a>
+                            </td>
+                            <td style="text-align:center">
+                                @Html.DisplayFor(c => item.Name)
+
+                            </td>
+                            <td style="text-align:center">
+                                @Html.DisplayFor(c => item.Price)
+
+                            </td>
+                            <td style="text-align:center">
+                                @Html.DisplayFor(c => item.ShadeColor)
+                            </td>
+                            <td style="text-align:center">
+                            <td>
+                                @Html.DisplayFor(c => item.ProductTypes.Name)
+
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger" asp-action="Remove" asp-route-id="@item.Id">
+
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+
+        </div>
+
+    </div>
+    }
+    else
+    {
+        <div style="color:white">No items added to the Sample cart.....</div>
+    }
+
+</form>
+
+@section Scripts{ 
+    <script>
+        $('.timepicker').timepicker({
+            timeFormat: 'h:mm p',
+            interval: 30,
+            minTime: '7',
+            maxTime: '6:00pm',
+            defaultTime: '7',
+            startTime: '7:00',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
+        $(function () {
+            $("#datepicker").datepicker({
+                minDate:+0, maxDate:"+3M"
+            });
+        });
+
+    </script>
+}

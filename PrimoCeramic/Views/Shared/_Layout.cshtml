@@ -1,0 +1,193 @@
+﻿@using Microsoft.AspNetCore.Http
+@using PrimoCeramic.Extensions
+@using PrimoCeramic.Utility
+@using PrimoCeramic.TempModels
+@using PrimoCeramic.Data
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"] - PrimoCeramic</title>
+    @RenderSection("css", false)
+    <environment include="Development">
+
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/Ceramico.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/fontawesome/css/all.min.css" />
+        <link rel="stylesheet" href="~/css/jquery.timepicker.css" />
+        <link rel="stylesheet" href="~/css/jquery-ui.css" />
+        <link rel="stylesheet" href="~/fontawesome/css/all.min.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/Ceramico.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/fontawesome/css/all.min.css" />
+        <link rel="stylesheet" href="~/css/jquery.timepicker.css" />
+        <link rel="stylesheet" href="~/css/jquery-ui.css" />
+        <link rel="stylesheet" href="~/fontawesome/css/all.min.css" asp-append-version="true" />
+
+    </environment>
+</head>
+<body style="background-color:black">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainnav">
+        <a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index">PrimoCeramic</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+                @*<li class="nav-item"><a class="nav-link" asp-area="Customer" asp-controller="Ceramic" asp-action="Index">Ceramic</a></li>
+        <li class="nav-item"><a class="nav-link" asp-area="Customer" asp-controller="Porcelain" asp-action="Index">Porcelain</a></li>*@
+
+                @*Show these options only to superadmin *@
+                @if (User.IsInRole(SD.SuperAdminEndUser))
+                {
+
+                    <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Orders" asp-action="Index">الطلبات</a></li>
+
+                    <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Products" asp-action="Index">المنتجات</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="AdminUser" asp-action="Index">الموظفين</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Emails" asp-action="Index">Emails</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            خصائص المنتجات
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="ProductTypes" asp-action="Index">انواع المنتجات</a>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="SpecialTags" asp-action="Index">منتجات مخصصة</a>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="ProductApplication" asp-action="Index">الاستخدامات</a>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="ProductCountry" asp-action="Index">بلد المنشأ</a>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="ProductSurface" asp-action="Index">السطح</a>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Statics" asp-action="Index">ثوابت</a>
+                        </div>
+                    </li>
+                }
+                @if (User.IsInRole(SD.SuperAdminEndUser) || User.IsInRole(SD.AdminEndUser))
+                {
+                    <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Appointments" asp-action="Index">المواعيد</a></li>
+                }
+                @if (User.IsInRole(SD.CustomerUser))
+                {
+                    <li class="nav-item"><a class="nav-link" asp-area="Customer" asp-controller="Address" asp-action="Index">Address</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-area="Customer" asp-controller="Orders" asp-action="Index">Orders</a></li>
+                }
+
+
+                @if (HttpContextAccessor.HttpContext.Session.Get<List<string>>("ssSampleCart") != null)
+                {
+                    <li style="color:white">
+                        <a asp-area="Customer" asp-controller="SampleCart" asp-action="Index" class="nav-link">
+
+                            <i class="fas fa-eye"></i>&nbsp;
+                            @{
+                                var count = HttpContextAccessor.HttpContext.Session.Get<List<string>>("ssSampleCart").Count;
+                            }
+                            (@count)
+                        </a>
+
+                    </li>
+                }
+                else
+                {
+                    <li style="color:white">
+                        <a asp-area="Customer" asp-controller="SampleCart" asp-action="Index" class="nav-link">
+
+                            <i class="fas fa-eye"></i>&nbsp;
+
+                            (0)
+                        </a>
+                    </li>
+                }
+
+
+                @if (HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>("ssShoppingCart") != null)
+                {
+                    <li style="color:white">
+                        <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index" class="nav-link">
+
+                            <i class="fas fa-shopping-cart"></i>&nbsp;
+                            @{
+                                var count = HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>("ssShoppingCart").Count;
+                            }
+                            (@count)
+                        </a>
+
+                    </li>
+                }
+                else
+                {
+                    <li style="color:white">
+                        <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index" class="nav-link">
+
+                            <i class="fas fa-shopping-cart"></i>&nbsp;
+
+                            (0)
+                        </a>
+                    </li>
+                }
+                <partial name="_LoginPartial" />
+            </ul>
+
+        </div>
+
+
+
+    </nav>
+    <br />
+    <br />
+    <br />
+    <br />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <partial name="_CookieConsentPartial" />
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2019 - PrimoCeramic</p>
+        </footer>
+    </div>
+  
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/js/jquery-ui.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.timepicker.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/js/jquery-ui.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.timepicker.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

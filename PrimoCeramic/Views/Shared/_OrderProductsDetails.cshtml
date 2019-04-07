@@ -1,0 +1,212 @@
+﻿@model PrimoCeramic.Models.ViewModel.OrderViewModelWithId
+
+@using PrimoCeramic.Utility
+@{double Sum = 0; }
+
+@{double Allvattotal = 0; }
+@{double Allvat = 0; }
+
+<br />
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="color:black">Add to shopping cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+
+                    <h4 style="color:black;">Are you sure you want to cancel the order?</h4>
+
+                    <input id="Orderid" hidden type="number" min="1" asp-for="@Model.Id" value="1" />
+
+
+                </div>
+                <div class="modal-footer">
+                    <button id="Cancel The Order" type="submit" value="2" asp-area="Customer" asp-controller="Orders" asp-action="Index" class="btn btn-primary ">Cancel the Order</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@if (Model.OrderViewModel.Count > 0)
+{
+
+
+    <table class="table table-responsive-sm border">
+        <tr class="table-info">
+            <th style="text-align:center;">
+                Ordernumber   @Model.OrderViewModel.FirstOrDefault().OrderId
+            
+            </th>
+            <th style="text-align:center;">
+                <label asp-for="@Model.OrderViewModel.FirstOrDefault().ProductName"></label>
+            </th>
+            <th style="text-align:center;">
+                <label asp-for="@Model.OrderViewModel.FirstOrDefault().ProductType"></label>
+            </th>
+
+
+            <th style="text-align:center;">
+                <label asp-for="@Model.OrderViewModel.FirstOrDefault().Quantity"></label>
+            </th>
+            <th style="text-align:center;">
+                <label asp-for="@Model.OrderViewModel.FirstOrDefault().Price"></label>
+            </th>
+            <th style="text-align:center;"colspan="2">
+                <label>Total without VAT</label>
+            </th>
+            <th style="text-align:center;" colspan="2">
+               <label>VAT</label>
+            </th>
+            <th style="text-align:center;"colspan="2">
+                <label>Total with VAT</label>
+            </th>
+
+            <th style="text-align:center;" colspan="2">
+                <label>Status</label>
+            </th>
+
+        </tr>
+        @foreach (var item in Model.OrderViewModel)
+        {
+        <tr style="padding:50px">
+            <td style="text-align:center">
+              
+                <a asp-area="Customer" asp-controller="@item.ProductType" asp-action="Details" asp-route-id="@item.ProductId">
+
+                    <img src="@item.ProductImge" width="50px" style="margin:auto; display:block;border-radius:5px;border:1px solid #bbb9b9" />
+                </a>
+            </td>
+            <td style="text-align:center">
+                @Html.DisplayFor(c => item.ProductName)
+
+            </td>
+            <td style="text-align:center">
+
+                @Html.DisplayFor(c => item.ProductType)
+
+            </td>
+            <td style="text-align:center">
+
+                @Html.DisplayFor(c => item.Quantity)
+
+            </td>
+            <td style="text-align:center">
+                @Html.DisplayFor(c => item.Price)
+
+            </td>
+
+            <td style="text-align:center"colspan="2">
+                @{double total = (int)item.Price * item.Quantity; }
+                @total
+                @{Sum += total;}
+            </td>
+            <td style="text-align:center"colspan="2">
+                @{double vat = total * item.Vat / 100; }
+                @{Allvat += vat;}
+                @vat
+
+
+            </td>
+            <td style="text-align:center"colspan="2">
+                @{double totalwithvat = total + vat; }
+                @{Allvattotal += totalwithvat;}
+                @totalwithvat
+
+
+            </td>
+
+            <td style="text-align:center"></td>
+            <td style="text-align:center"></td>
+        </tr>
+        }
+        <tr style="background-color:#1f3933;">
+            <th style="text-align:center;">
+                Date @Model.OrderViewModel.FirstOrDefault().Date.ToShortDateString()
+            </th>
+
+            <th style="text-align:center;" colspan="3">
+
+                Address: @Model.OrderViewModel.FirstOrDefault().Country, @Model.OrderViewModel.FirstOrDefault().City,
+                @Model.OrderViewModel.FirstOrDefault().Address, @Model.OrderViewModel.FirstOrDefault().Phone
+            </th>
+
+
+          
+            
+
+            <th style="text-align:center;">
+
+                <label>Total</label>
+            </th>
+            <th style="text-align:center;"colspan="2">
+                <label>@Sum S.R</label>
+            </th>
+            <th style="text-align:center;"colspan="2">
+                <label>   @Allvat S.R</label>
+            </th>
+            <th style="text-align:center;"colspan="2">
+                <label>    @Allvattotal S.R</label>
+            </th>
+
+
+            @if (@Model.OrderViewModel.FirstOrDefault().IsSent)
+            {
+                <th style="text-align:center">
+                    Sent
+                </th>
+            }
+            else
+            {
+                <th style="text-align:center">
+                    Not sent
+                </th>
+            }
+            @if (@Model.OrderViewModel.FirstOrDefault().IsPaid)
+            {
+                <th style="text-align:center">
+                    Paid
+                </th>
+            }
+            else
+            {
+                <th style="text-align:center">
+                    Not Paid
+                </th>
+            }
+        </tr>
+    </table>
+}
+else
+{
+    <div> No Items added to the shoping cart</div>
+}
+<br />
+
+@section Scripts{
+
+
+    <script>
+
+        function ProductCartClicked(clicked_id) {
+            var selectedproduct = 0;
+            selectedproduct = clicked_id;
+
+            console.log(selectedproduct);
+            document.getElementById('Orderid').value = selectedproduct;
+        }
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+
+
+
+    </script>
+}

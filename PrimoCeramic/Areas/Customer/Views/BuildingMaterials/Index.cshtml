@@ -1,0 +1,161 @@
+﻿@model PrimoCeramic.Models.ViewModel.ProductsPagingViewModel
+@using PrimoCeramic.Extensions
+@using PrimoCeramic.Utility
+
+
+<body>
+
+
+
+
+    <div class="homebar bigpage">
+
+        <a class="homebarlinks midpage" asp-area="Customer" asp-controller="Ceramic" asp-action="Index">Ceramic</a>
+        <a class="homebarlinks midpage" asp-area="Customer" asp-controller="Porcelain" asp-action="Index">Porcelain</a>
+        <a class="homebarlinks midpage" asp-area="Customer" asp-controller="Sanitaryware" asp-action="Index">Sanitary Ware</a>
+        <a class="homebarlinks midpage" style="color:black">Building Materials</a>
+    </div>
+
+
+
+
+
+
+    <div class="smallpage mobilhome">
+        <form method="get">
+            <div>
+                <Button class="mobilehomebutton " asp-area="Customer" asp-controller="Ceramic" asp-action="Index">Ceramic</Button>
+            </div>
+            <br />
+            <div>
+                <Button class="mobilehomebutton " asp-area="Customer" asp-controller="Porcelain" asp-action="Index">Porcelain</Button>
+            </div>
+            <br />
+
+            <div>
+                <Button class="mobilehomebutton " asp-area="Customer" asp-controller="Sanitaryware" asp-action="Index">Sanitary Ware</Button>
+            </div>
+            <br />
+            <div>
+                <Button class="mobilehomebutton " style="font-size: 25px;color:black" asp-area="Customer" asp-controller="BuildingMaterials" asp-action="Index">Building Materials</Button>
+            </div>
+        </form>
+    </div>
+    <br />
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle" style="color:black">Add to shopping cart</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+
+                        <h3 style="color:black;">Quantity</h3>
+                        <input id="quantity" type="number" min="1" max="20000" asp-for="@Model.Quantity" value="1" />
+                        <input id="producatid" hidden type="number" min="1" asp-for="@Model.Id" value="1" />
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button id="AddToCartBtn" type="submit" value="2" asp-action="AddtoShopping" asp-route-fromUrl="Index" class="btn btn-primary ">Add To Shopping Cart <i class="fas fa-shopping-cart"></i>&nbsp;</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <form method="get">
+        <div class="smallpage custom-select-lg text-md-left">
+            <select class="selecttag" onchange="this.form.submit()" name="tagnumber" asp-for="@Model.SelectedTag" asp-items="Model.SpecialTags.ToSelectListItem(Model.SelectedTag) "></select>
+        </div>
+    </form>
+    <br />
+    <br />
+
+
+    <div class="container">
+        <div class="row">
+
+            @foreach (var product in Model.Products)
+            {
+
+                <div class="col-lg-2 col-md-3 col-6">
+
+                    <div class="card mb-4">
+                        <div class="card-img-top">
+                            <a asp-action="Details" asp-route-id="@product.Id" style="text-decoration:none">
+                                <img class="card-img-top" src="@product.Image" alt="Card image cap" />
+                            </a>
+                                <ul class="list-inline member-icon animate text-center">
+
+                                    <li class="list-inline-item"><button class="btn btn-primary" data-toggle="modal" data-placement="top" data-target="#exampleModalCenter" title="Add to shopping cart" id="@product.Id" onclick="ProductCartCliced(this.id)"><i class="fa fa-shopping-cart"></i></button></li>
+                                    <li class="list-inline-item"><a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Show details" asp-action="Details" asp-route-id="@product.Id"><i class="fa fa-list"></i></a></li>
+
+                                </ul>
+                        </div>
+                        <div class="card-body p-1">
+                            <a asp-action="Details" asp-route-id="@product.Id" style="text-decoration:none">
+                                <h6 class="card-title text-center mb-1" style="color:black">
+
+                                    @product.Price S.R
+                                </h6>
+                                <p class="card-text text-muted text-center">@product.Name</p>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            }
+        </div>
+
+    </div>
+
+    @if (Model.PagingInfo.TotalPage != 1)
+    {
+        <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+             page-class="btn border" page-class-normal="btn btn-page-normal active"
+             page-class-selected="btn btn-page-selected active" class="btn-group m-1"></div>
+    }
+</body>
+
+@section Scripts{
+
+
+    <script>
+
+    function ProductCartCliced(clicked_id) {
+        var selectedproduct = 0;
+        selectedproduct=clicked_id;
+
+        console.log(selectedproduct);
+        document.getElementById('producatid').value = selectedproduct;
+    }
+
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+        document.getElementById("select").selectedIndex = @Model.SelectedTag;
+
+
+
+    </script>
+}
+
+@section css {
+    <link rel="stylesheet" href="~/css/productcards.css" asp-append-version="true" />
+
+
+}

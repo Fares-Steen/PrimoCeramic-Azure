@@ -1,0 +1,291 @@
+﻿@model PrimoCeramic.Models.ViewModel.ProductsViewModel
+@using PrimoCeramic.Extensions
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<br />
+<br />
+<br />
+
+<h2 class="text-info">Edit Product </h2>
+
+<form method="post" enctype="multipart/form-data">
+    @*asp-action="Create"*@
+
+    <div class="p-4 border rounded row">
+        <input hidden asp-for="Products.Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="Products.Name"></label>
+                </div>
+                <div class="col-5">
+
+                    <input asp-for="Products.Name" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="Products.Price"></label>
+                </div>
+                <div class="col-5">
+
+                    <input asp-for="Products.Price" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="Products.Width"></label>
+                </div>
+                <div class="col-5">
+
+                    <input asp-for="Products.Width" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.Width" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="Products.Height"></label>
+                </div>
+                <div class="col-5">
+
+                    <input asp-for="Products.Height" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.Height" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="Products.Depth"></label>
+                </div>
+                <div class="col-5">
+
+                    <input asp-for="Products.Depth" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.Depth" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="Products.Casepackaging"></label>
+                </div>
+                <div class="col-5">
+
+                    <input asp-for="Products.Casepackaging"min="0.1" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.Casepackaging" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="Products.Thickness"></label>
+                </div>
+                <div class="col-5">
+
+                    <input asp-for="Products.Thickness" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.Thickness" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="Products.Weight"></label>
+                </div>
+                <div class="col-5">
+
+                    <input asp-for="Products.Weight" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.Weight" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="Products.Note"></label>
+                </div>
+                <div class="col-5">
+
+                    <input asp-for="Products.Note" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.Note" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="ProductTypes"></label>
+                </div>
+                <div class="col-5">
+
+                    <select asp-for="@Model.Products.ProductTypeId" asp-items="Model.ProductTypes.ToSelectListItem(Model.Products.ProductTypeId) " class="form-control"></select>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="SpecialTags"></label>
+                </div>
+                <div class="col-5">
+
+                    <select asp-for="@Model.Products.SpecialTagsId" asp-items="Model.SpecialTags.ToSelectListItem(Model.Products.SpecialTagsId) " class="form-control"></select>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="ProductCountry"></label>
+                </div>
+                <div class="col-5">
+
+                    <select asp-for="@Model.Products.ProductCountryId" asp-items="Model.ProductCountry.ToSelectListItem(Model.Products.ProductCountryId) " class="form-control"></select>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="ProductApplication"></label>
+                </div>
+                <div class="col-5">
+
+                    <select asp-for="@Model.Products.ProductApplicationId" asp-items="Model.ProductApplication.ToSelectListItem(Model.Products.ProductApplicationId) " class="form-control"></select>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="ProductSurface"></label>
+                </div>
+                <div class="col-5">
+
+                    <select asp-for="@Model.Products.ProductSurfaceId" asp-items="Model.ProductSurface.ToSelectListItem(Model.Products.ProductSurfaceId) " class="form-control"></select>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="Products.ShadeColor"></label>
+                </div>
+                <div class="col-5">
+
+                    <input asp-for="Products.ShadeColor" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.ShadeColor" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="Products.Available"></label>
+                </div>
+                <div class="col-5">
+
+                    <input type="checkbox" asp-for="Products.Available" />
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+
+                    <label asp-for="Products.Image"></label>
+                </div>
+                <div class="col-5">
+
+                    @*Add(multiple) before the class to add mulifiles *@
+                    <input type="file" name="files" multiple class="form-control" />
+                    <input hidden asp-for="Products.Id" />
+                    <button type="submit" asp-action="Addphotos" asp-route-id="Products.Id" asp-controller="Products" asp-area="Admin" class="btn btn-primary" value="Upload">Upload</button>
+
+                </div>
+            </div>
+        </div>
+       
+
+        <div class="col-4">
+            @foreach (var item in Model.ProductImages)
+            {
+            if (item.IsDefault)
+            {
+            <div id="@item.Image" class=" btn-group-sm">
+                <img src="@item.Image" width="20%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+                <button class=".deletecc" asp-action="DeletePhoto" asp-route-photo="@item.Image" asp-route-id="@item.ProductId" asp-controller="Products" asp-area="Admin">⛔ </button>
+                <input type="radio" checked="checked" value="@item.Id" asp-for="SelectedRole" />
+            </div>
+            }
+            else
+            {
+
+            <div id="@item.Image" class="btn-group-sm">
+                <img src="@item.Image" width="20%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+                <button class=".deletecc" asp-action="DeletePhoto" asp-route-photo="@item.Image" asp-route-id="@item.ProductId" asp-controller="Products" asp-area="Admin">⛔ </button>
+                <input type="radio" value="@item.Id" asp-for="SelectedRole" />
+            </div>
+            }
+            }
+
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Update" />
+            <a asp-action="Index" class="btn btn-primary">Back to List</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+<script>
+    //var list = document.getElementsByTagName("img")
+    //var x = 1
+    //document.getElementById("Nextphoto").addEventListener("click", function () {
+    //    if (x == list.length - 1) {
+    //        x = 0;
+    //    }
+    //    x++;
+    //    document.getElementById("mainimag").src = list[x].src;
+
+
+
+    //});
+    //document.getElementById("backphoto").addEventListener("click", function () {
+    //    if (x == 1) {
+    //        x = list.length;
+    //    }
+    //    x--;
+    //    document.getElementById("mainimag").src = list[x].src;
+
+
+
+    //});
+
+    $(document).ready(function () {
+        $('.deletecc').click(function () {
+            $(this).parent().remove();
+
+            return false;
+        });
+    });
+    $(function () {
+        $("input[type='radio']").change(function () {
+
+            $("input[type='submit']").prop("disabled", false);
+            //Or
+            //$("input[type='submit']").removeAttr("disabled");
+        });
+    });
+</script>
+
+}

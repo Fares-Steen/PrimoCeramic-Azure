@@ -1,0 +1,53 @@
+﻿@model PrimoCeramic.Models.ViewModel.CustomerAllOrdersViewModel
+
+<br />
+<br />
+<div class="col-lg-12 col-sm-12">
+
+    <a asp-controller="Home" asp-area="Customer" asp-action="Index" class="btn btn-primary">Home Page</a>
+    <a asp-controller="Orders" asp-area="Customer" asp-action="CreatePDF" class="btn btn-primary">CreatePDF</a>
+    
+</div>
+
+<br />
+@if (Model.OrderViewModelWithId.Count > 0)
+{
+
+    foreach (var item in Model.OrderViewModelWithId)
+    {
+        <partial name="~/Views/Shared/_OrderProductsDetails.cshtml" model="item" />
+    }
+
+}
+else
+{
+    <h1>You did not order anything.....</h1>
+}
+@if (Model.PagingInfo.TotalPage != 1)
+{
+    <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+         page-class="btn border" page-class-normal="btn btn-page-normal active"
+         page-class-selected="btn btn-page-selected active" class="btn-group m-1"></div>
+
+}
+    @section Scripts{
+
+
+        <script>
+
+            function ProductCartClicked(clicked_id) {
+                var selectedproduct = 0;
+                selectedproduct = clicked_id;
+
+                console.log(selectedproduct);
+                document.getElementById('Orderid').value = selectedproduct;
+            }
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
+
+
+
+
+        </script>
+    }
